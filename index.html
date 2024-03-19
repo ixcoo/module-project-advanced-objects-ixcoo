@@ -2,379 +2,238 @@
 <html lang="en">
 
 <head>
-  <title>Advanced Objects</title>
+  <title>Advanced Functions</title>
 </head>
 
 <body>
-  <h1>Advanced Objects</h1>
+  <h1>Advanced Functions</h1>
   <p>Please load this file in VSCode and Chrome, and open the Console in Chrome Dev Tools.</p>
   <p>Work through the challenges found inside the script tag in this document,
     until the Console reports all tests passing.</p>
 
   <script>
-    // In CHALLENGES 1-4 you will flesh out some classes.
+    // In CHALLENGES 1-8 you will flesh out some functions.
 
-    // To do this, translate each 🧠 set of instructions into a working class.
-    // ❗ Classes are scaffolded for you.
+    // To do this, translate each 🧠 set of instructions into a working function.
+    // ❗ Functions are already scaffolded as arrow functions.
     // ❗ Watch the Guided Project to learn proper debugging technique.
 
     // 👉 CHALLENGE 1
-    // 🧠 Build a PeterPan class. This class allows to instantiate persons with Peter Pan syndrome.
-    // 🧠 When instantiating a new person using this class, we provide a string with the name of the person.
-    // 🧠 The new person will have a `name` prop initialised to the desired name, and an `age` prop initialised to 0.
-    // 🧠 The person also has an `ageGracefully` method, which increases `age` by 1 each time it's called.
-    // 🧠 But there's a catch: once `age` reaches 12, the `ageGracefully` method will have no effect.
-    class PeterPan {
-      constructor(name, age) {
-        this.name = name;
-        this.age = 0;
-      }
-      ageGracefully() {
-        if (this.age < 12) {
-          this.age++;
-          return `name: ${this.name}, age: ${this.age}`;
-        } else if (this.age > 12) {
-          console.log("You're too old for this!")
-        } 
-      }
+    // 🧠 The function processSingleLearner takes a learner object as its argument, and returns it after some modifications.
+    // 🧠 If the learner has a "lovesJS" property set to 0, we need to set it to false.
+    // 🧠 If the learner has a "lovesJS" property set to 1, we need to set it to true.
+    // 🤔 The reason is that in some databases, Booleans true and false are actually stored as 1 and 0 respectively.
+    // 🤔 But real Booleans are easier to work with, and that is why we might need a function like this!
+    // 🧠 Examples of usage:
+    // processSingleLearner({ name: "Elisabeth", lovesJS: 1 }) // should return { name: "Elisabeth", lovesJS: true }
+    // processSingleLearner({ name: "Pete", age: 23, lovesJS: 0 }) // should return { name: "Pete", age: 23, lovesJS: false }
+    const processSingleLearner = (learner) => {
+      if (learner.lovesJS === 0) {
+        learner.lovesJS = false;
+      } else if (learner.lovesJS === 1) {
+        learner.lovesJS = true;
+      } 
+      return learner;
     }
-      const Peter = new PeterPan("Peter", 10);
-      console.log(Peter.ageGracefully());
 
     // 👉 CHALLENGE 2
-    // 🧠 Build an AirPlane class. This class allows to instantiate airplanes.
-    // 🧠 When instantiating a new plane using this class, we provide a string with the model of the plane.
-    // 🧠 A new plane has a `model` prop initialised to the desired model, and also an `altitude` prop initialised to 0.
-    // 🧠 Planes have an `up` method, which takes a number of meters as its argument.
-    // 🧠 Calling `up` changes the `altitude` prop appropriately and returns the updated `altitude`.
-    // 🧠 Planes have a `down` method, which takes a number of meters as its argument.
-    // 🧠 Calling `down` changes the `altitude` prop appropriately and returns the updated `altitude`.
-    // 🧠 If calling `down` would cause the plane to go below altitude zero, `altitude` is set to 0 and the string "CRASH!" is returned.
-    class AirPlane {
-      constructor(model, altitude) {
-        this.model = model;
-        this.altitude = 0;
-      }
-      up(meters) {
-        this.altitude += meters; 
-          return this.altitude};
-      
-      
-      down(meters) {
-        if (this.altitude >= meters) {
-          this.altitude -= meters
-          return this.altitude;
-        }
-        this.altitude = 0 
-        return "CRASH!"
-      }
+    // 🧠 The function processLearnerLoop takes an array of learner objects as its argument, and returns it after some modifications.
+    // 🧠 For each learner, if the learner has a "lovesJS" property set to 0, we need to set it to false.
+    // 🧠 For each learner, if the learner has a "lovesJS" property set to 1, we need to set it to true.
+    // 🧠 Examples of usage:
+    // processSingleLearner([{ name: "Elisabeth", lovesJS: 1 },{ name: "Pete", age: 23, lovesJS: 0 }])
+    //   should return [{ name: "Elisabeth", lovesJS: true },{ name: "Pete", age: 23, lovesJS: false }]
+    // ❗ Notes:
+    // 🧠 There are many approaches to this problem: using a loop, using forEach, using map...
+    // 🧠 Solve this challenge using a for/in loop or a for loop.
+    const processLearnersLoop = (learn) => {
+      for (let i = 0; i < learn.length; i++) {
+        if (learn[i].lovesJS === 0) {
+        learn[i].lovesJS = false;
+      } else if (learn[i].lovesJS === 1) {
+        learn[i].lovesJS = true;
+      }  
+      }return learn;
     }
 
     // 👉 CHALLENGE 3
-    // 🧠 Build a Bulb class.
-    // 🧠 All new bulbs are initialised with a prop `isOn` and three methods: `turnOn`, `turnOff` and `toggle`.
-    // 🧠 The initial value of `isOn` will be the Boolean false.
-    // 🧠 The methods work as one might expect, changing the value of `isOn` to the appropriate Boolean.
-    // 🧠 The methods also return one of these two strings: "You turned the bulb ON", or "You turned the bulb OFF".
-    class Bulb {
-      constructor() {
-        this.isOn = false;
-      }
-        turnOn() {
-          this.isOn = true;
-          return "You turned the bulb ON";
-        }
-
-        turnOff() {
-          this.isOn = false;
-          return "You turned the bulb OFF";
-        }
-
-        toggle() {
-          this.isOn = !this.isOn;
-          if (this.isOn) {
-            return "You turned the bulb ON";
-          }
-          return "You turned the bulb OFF";
-        }
-
-      }
-
+    // 🧠 The function processLearnerForEach takes an array of learner objects as its argument, and returns it after some modifications.
+    // 🧠 It is an alternate implementation of the function processLearnersLoop above.
+    // ❗ Notes:
+    // 🧠 Solve this challenge using the forEach method of the learners array.
+    // 🧠 Use arrow functions whenever possible.
+    const processLearnerForEach = (learners) => {
+      learners.forEach(learners => {
+        if (learners.lovesJS === 0) {
+        learners.lovesJS = false;
+      } else if (learners.lovesJS === 1) {
+        learners.lovesJS = true;
+      }  
+      });
+      return learners;
+    } 
 
     // 👉 CHALLENGE 4
-    // 🧠 Build a CountDown class that can count down starting at any number we pass to the constructor.
-    // 🧠 CountDowns have a `count` method that returns a string in the format "10!".
-    // 🧠 One exception is that upon reaching zero, instead of returning "0!", `count` returns "Liftoff!"
-    // 🧠 After liftoff, `count` returns null instead of a string.
-    // 🧠 It's up to you to decide what property (or properties) are needed.
-    // Example of use:
-    //   let minusThree = new CountDown(3) // we could pass any number
-    //   minusThree.count() // returns "3!"
-    //   minusThree.count() // returns "2!"
-    //   minusThree.count() // returns "1!"
-    //   minusThree.count() // returns "Liftoff!"
-    //   minusThree.count() // returns null
-    //   minusThree.count() // returns null
-    class CountDown {
-      constructor(num) {
-        this.currentNum = num;
-      }
-      count() {
-        if (this.currentNum >= 1) {
-          return this.currentNum-- + "!"
-        } else if (this.currentNum === 0) {
-        this.currentNum--
-        return "Liftoff!"
-      } else {
-        return null
-      }
-    } }
-
-
-    // 🧪 TESTS, do not work below this line
-    // 🧪 TESTS, do not work below this line
-    // 🧪 TESTS, do not work below this line
-    {
-      runTest('CHALLENGE 1 - PeterPan', [
-        function () {
-          let actual, description = 'The person ages normally until age 12'
-          let expected = { name: 'Joe', age: 12 }
-          try {
-            actual = new PeterPan('Joe');
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].forEach(round => actual.ageGracefully())
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'The person does not age beyond 12 years old'
-          let expected = { name: 'Joe', age: 12 }
-          try {
-            actual = new PeterPan('Joe');
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].forEach(round => actual.ageGracefully())
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
+    // 🧠 The function processLearnerMap takes an array of learner objects as its argument, and returns a new array.
+    // 🧠 It is an alternate implementation of the function processLearnersLoop above.
+    // ❗ Notes:
+    // 🧠 Solve this challenge using the map method of the learners array.
+    // 🧠 Use arrow functions.
+    const processLearnerMap = (learners) => {
+    return learners.map(learner => {
+        if (learner.lovesJS === 0) {
+            return { ...learner, lovesJS: false };
+        } else if (learner.lovesJS === 1) {
+            return { ...learner, lovesJS: true };
+        } else {
+            return learner;
         }
-      ])
-      runTest('CHALLENGE 2 - Airplane', [
-        function () {
-          let actual, description = 'New plane has model and altitude properties'
-          let expected = { model: 'Spitfire', altitude: 0 }
-          try {
-            actual = new AirPlane('Spitfire')
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'New plane has an up method that increases altitude'
-          let expected = { model: 'Spitfire', altitude: 10 }
-          try {
-            actual = new AirPlane('Spitfire')
-            actual.up(4)
-            actual.up(6)
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'The up method returns the updated altitude'
-          let expected = 10
-          try {
-            let plane = new AirPlane('Spitfire')
-            plane.up(4)
-            actual = plane.up(6)
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'New plane has a down method that decreases altitude'
-          let expected = 7
-          try {
-            let plane = new AirPlane('Spitfire')
-            plane.altitude = 10
-            plane.down(3)
-            actual = plane.altitude
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'The down method returns the updated altitude'
-          let expected = 8
-          try {
-            let plane = new AirPlane('Spitfire')
-            plane.altitude = 11
-            actual = plane.down(3)
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'A crashed plane has altitude 0'
-          let expected = 0
-          try {
-            let plane = new AirPlane('Spitfire')
-            plane.altitude = 10
-            plane.down(11)
-            actual = plane.altitude
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'The down method returns CRASH! if we crash the plane'
-          let expected = "CRASH!"
-          try {
-            let plane = new AirPlane('Spitfire')
-            plane.altitude = 10
-            actual = plane.down(11)
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-      ])
-      runTest('CHALLENGE 3 - Bulb', [
-        function () {
-          let actual, description = 'New bulbs have an isOn property with a value of false'
-          let expected = { isOn: false }
-          try {
-            actual = new Bulb()
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'A new bulb can be turned on'
-          let expected = { isOn: true }
-          try {
-            actual = new Bulb()
-            actual.turnOn()
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'Turning on a bulb returns the right string'
-          let expected = "You turned the bulb ON"
-          try {
-            let bulb = new Bulb()
-            actual = bulb.turnOn()
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'A bulb that is on can be turned off'
-          let expected = { isOn: false }
-          try {
-            actual = new Bulb()
-            actual.isOn = true
-            actual.turnOff()
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'Turning off a bulb returns the right string'
-          let expected = "You turned the bulb OFF"
-          try {
-            let bulb = new Bulb()
-            bulb.isOn = true
-            actual = bulb.turnOff()
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'An off bulb can be toggled on'
-          let expected = { isOn: true }
-          try {
-            actual = new Bulb()
-            actual.toggle()
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'An on bulb can be toggled off'
-          let expected = { isOn: false }
-          try {
-            actual = new Bulb()
-            actual.isOn = true
-            actual.toggle()
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'Toggling multiple times works as expected'
-          let expected = [true, false, true]
-          try {
-            let bulb = new Bulb()
-            actual = []
-            bulb.toggle()
-            actual.push(bulb.isOn)
-            bulb.toggle()
-            actual.push(bulb.isOn)
-            bulb.toggle()
-            actual.push(bulb.isOn)
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'Toggling returns the proper messages'
-          let expected = ["You turned the bulb ON", "You turned the bulb OFF", "You turned the bulb ON"]
-          try {
-            let bulb = new Bulb()
-            actual = []
-            actual.push(bulb.toggle())
-            actual.push(bulb.toggle())
-            actual.push(bulb.toggle())
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-      ])
-      runTest('CHALLENGE 4 - CountDown', [
-        function () {
-          let actual, description = 'Calling count returns the proper number'
-          let expected = ["4!", "3!", "2!", "1!"]
-          try {
-            let minusFour = new CountDown(4)
-            actual = []
-            actual.push(minusFour.count())
-            actual.push(minusFour.count())
-            actual.push(minusFour.count())
-            actual.push(minusFour.count())
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'Upon reaching zero, count returns Liftoff!'
-          let expected = ["3!", "2!", "1!", "Liftoff!"]
-          try {
-            let minusThree = new CountDown(3)
-            actual = []
-            actual.push(minusThree.count())
-            actual.push(minusThree.count())
-            actual.push(minusThree.count())
-            actual.push(minusThree.count())
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-        function () {
-          let actual, description = 'After liftoff, count always returns null'
-          let expected = ["2!", "1!", "Liftoff!", null, null]
-          try {
-            let minusTwo = new CountDown(2)
-            actual = []
-            actual.push(minusTwo.count())
-            actual.push(minusTwo.count())
-            actual.push(minusTwo.count())
-            actual.push(minusTwo.count())
-            actual.push(minusTwo.count())
-          } catch (err) { actual = err.message }
-          return [description, expected, actual]
-        },
-      ])
-      function runTest(testTitle, tests) {
-        console.log(testTitle)
-        tests.forEach((test, idx) => {
-          const [description, expected, actual] = test().map(JSON.stringify)
-          if (expected === actual) {
-            console.log(`\t✅ Test ${idx + 1} ${description} PASSED`)
-          } else {
-            console.log(`\t❌ Test ${idx + 1} ${description} FAILED:
-          💀 Expected ${expected} but got ${actual}`)
-          }
-        })
+    });
+};
+    
+
+    // 👉 CHALLENGE 5
+    // 🧠 The function getJavaScriptLoversForEach takes an array of learner objects and returns an array or a string.
+    // 🧠 The returned array must contain only the learners who love JavaScript.
+    // 🧠 However, if nobody loves JavaScript the function returns the string "no JS lovers here!".
+    // 🧠 Another complication is that the lovesJS prop on the learner could be a Boolean (false/true) or a number (0/1).
+    // ❗ Notes:
+    // 🧠 Solve this challenge using the forEach method of the learners array.
+    // 🧠 You will need to declare a result array into which you push learners from inside your forEach loop.
+    const getJavaScriptLoversForEach = obj => {
+      const string = [];
+      obj.forEach(obj => {
+        if (obj.lovesJS === true || obj.lovesJS === 1) {
+        string.push(obj);
       }
+    });
+      if (string.length > 0) {
+        return string
+      } else {
+        return "no JS lovers here!"
+      }
+
+      };
+      
+  
+
+    // 👉 CHALLENGE 6
+    // 🧠 The function getJavaScriptLoversFilter takes an array of learner objects and returns an array or a string.
+    // 🧠 It should work exactly the same as the getJavaScriptLoversForEach function above.
+    // ❗ Notes:
+    // 🧠 Solve this challenge using the filter method of the learners array.
+    const getJavaScriptLoversFilter = (obj) => {
+      const string = [];
+      obj.filter(obj => {
+        if (obj.lovesJS === true || obj.lovesJS === 1) {
+        string.push(obj);
+      }
+    });
+      if (string.length > 0) {
+        return string
+      } else {
+        return "no JS lovers here!"
+      }
+
+      };
+
+    // 👉 CHALLENGE 7
+    // 🧠 The function sumOddInts takes an array of integers as its argument and returns an array with two elements.
+    // 🧠 The first element is a number which is the sum of the odd integers in the original array.
+    // 🧠 The second element is an array containing only the odd numbers from the original array, in the same order.
+    // 🧠 Examples of usage:
+    // sumOddInts([0, 1, 2, 3, 4, 5]) // should return [9, [1, 3, 5]]
+    // sumOddInts([2, 5, 1, 4, 0]) // should return [6, [5, 1]]
+    // sumOddInts([2, 6]) // should return [0, []]
+    // sumOddInts([]) // should return [0, []]
+    // ❗ Notes:
+    // 🧠 This could be solved by using filter to make an array of odd integers, and then using forEach to add them up.
+    // 🧠 Or you could opt for solving everything with a single forEach which is the recommended approach (saves a loop).
+    const sumOddInts = (integers) => {
+    let sum = 0;
+    const oddNumbers = [];
+
+    integers.forEach(number => {
+        if (number % 2 !== 0) {
+            sum += number;
+            oddNumbers.push(number);
+        }
+    });
+
+    return [sum, oddNumbers];
+};
+
+    // 👉 CHALLENGE 8
+    // 🧠 The function checkInts takes any number of arguments, but each argument is an integer.
+    // 🧠 The return value is a new array of strings, its length equal to the number of arguments passed.
+    // 🧠 Each string is "even" if the integer was even, or "odd" if it was odd.
+    // 🧠 If no arguments are passed however, return the string "pass some arguments, yo!".
+    // 🧠 Examples of usage:
+    // checkInts(0, 1, 2, 3, 4, 5) // should return ["even", "odd","even", "odd","even", "odd"]
+    // checkInts(2, 5, 1, 4, 0) // should return ["even", "odd", "odd", "even", "even"]
+    // checkInts(2, 6) // should return ["even", "even"]
+    // ❗ Notes:
+    // 🧠 Solve this problem using rest parameters and map.
+    const checkInts = (...args) => {
+    if (args.length === 0) {
+        return "pass some arguments, yo!";
+    }
+
+    return args.map(number => number % 2 === 0 ? "even" : "odd");
+};
+
+    // 🧪 TESTS, do not work below this line
+    // 🧪 TESTS, do not work below this line
+    // 🧪 TESTS, do not work below this line
+    runTests('CHALLENGE 1 - processSingleLearner', processSingleLearner, [
+      [[{ lovesJS: 1 }], { lovesJS: true }],
+      [[{ lovesJS: 0 }], { lovesJS: false }],
+      [[{ name: "Elisabeth", lovesJS: 1 }], { name: "Elisabeth", lovesJS: true }],
+      [[{ name: "Pete", age: 23, lovesJS: 0 }], { name: "Pete", age: 23, lovesJS: false }],
+    ])
+    const processLearnersTest = [
+      [[[{ name: "Elisabeth", lovesJS: 1 }, { name: "Pete", age: 23, lovesJS: 0 }]], [{ name: "Elisabeth", lovesJS: true }, { name: "Pete", age: 23, lovesJS: false }]],
+      [[[{ lovesJS: 1 }, { lovesJS: 0 }, { lovesJS: 1 }, { lovesJS: 0 }]], [{ lovesJS: true }, { lovesJS: false }, { lovesJS: true }, { lovesJS: false }]],
+    ]
+    runTests('CHALLENGE 2 - processLearnersLoop', processLearnersLoop, processLearnersTest)
+    runTests('CHALLENGE 3 - processLearnerForEach', processLearnerForEach, processLearnersTest)
+    runTests('CHALLENGE 4 - processLearnerMap', processLearnerMap, processLearnersTest)
+    const getJavaScriptLoversTest = [
+      [[[{ name: "Elisabeth", lovesJS: 1 }, { name: "Pete", age: 23, lovesJS: 0 }]], [{ name: "Elisabeth", lovesJS: 1 }]],
+      [[[{ name: "Elisabeth", lovesJS: false }, { name: "Pete", age: 23, lovesJS: true }]], [{ name: "Pete", age: 23, lovesJS: true }]],
+      [[[{ lovesJS: 1 }, { lovesJS: 0 }, { lovesJS: true }, { lovesJS: false }]], [{ lovesJS: 1 }, { lovesJS: true }]],
+      [[[{ lovesJS: false }, { lovesJS: 0 }, { lovesJS: false }]], "no JS lovers here!"],
+    ]
+    runTests('CHALLENGE 5 - getJavaScriptLoversForEach', getJavaScriptLoversForEach, getJavaScriptLoversTest)
+    runTests('CHALLENGE 6 - getJavaScriptLoversFilter', getJavaScriptLoversFilter, getJavaScriptLoversTest)
+    runTests('CHALLENGE 7 - sumOddInts', sumOddInts, [
+      [[[0, 1, 2, 3, 4, 5]], [9, [1, 3, 5]]],
+      [[[2, 5, 1, 4, 0]], [6, [5, 1]]],
+      [[[2, 6]], [0, []]],
+      [[[]], [0, []]],
+    ])
+    runTests('CHALLENGE 8 - checkInts', checkInts, [
+      [[0, 1, 2, 3, 4, 5], ["even", "odd", "even", "odd", "even", "odd"]],
+      [[2, 5, 1, 4, 0], ["even", "odd", "odd", "even", "even"]],
+      [[2, 6], ["even", "even"]],
+      [[3, 5], ["odd", "odd"]],
+      [[], "pass some arguments, yo!"],
+    ])
+    function runTests(testName, func, tests) {
+      let results = []
+      tests.forEach(test => {
+        const argsList = test[0]
+        const expected = JSON.stringify(test[1])
+        const actual = JSON.stringify(func.apply(null, JSON.parse(JSON.stringify(argsList))))
+        results.push([argsList, expected, actual])
+      })
+      console.log('\n' + testName)
+      if (results.every(result => result[1] === result[2])) console.log('\t✅ All tests pass')
+      else results.forEach((result, idx) => {
+        if (result[1] === result[2]) console.log(`\t✅ Test ${idx + 1} passes`)
+        else console.log(`\t❌ Test ${idx + 1} fails: ${func.name}(${result[0]
+          .map(JSON.stringify)}) should return ${result[1]} but returns ${result[2]}`)
+      })
     }
   </script>
 </body>
